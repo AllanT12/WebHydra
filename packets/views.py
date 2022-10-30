@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from .Serializer import PacketsSerializer
+from .serializer import PacketsSerializer
 from .models import Packets
 
 @api_view(['POST'])
@@ -55,4 +55,6 @@ def delete_items(request, pk):
     packet = get_object_or_404(Packets, pk=pk)
     packet.delete()
     return Response(status=status.HTTP_202_ACCEPTED)
+# Create your views here.
+
 # Create your views here.

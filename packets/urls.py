@@ -1,10 +1,9 @@
-from django.urls import path
-
-from . import views
+from django.contrib import admin
+from django.urls import path, include
+from .views import *
 
 urlpatterns = [
-    path('create/', views.add_items, name='packets'),
-    path('all/', views.view_items, name='view_items'),
-    path('update/<int:pk>/', views.update_items, name='update-items'),
-    path('item/<int:pk>/delete/', views.delete_items, name='delete-items'),
+    path('view/', view_items),
+    path('add/', add_items),
+    path('update/', update_items),
 ]

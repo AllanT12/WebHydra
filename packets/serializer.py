@@ -4,5 +4,6 @@ import packets.models
 
 
 class PacketsSerializer(serializers.ModelSerializer):
-    model = packets.models.Packets
-    fields = '__all__'
+    class Meta:
+        model = packets.models.Packets
+        fields = '__all__'

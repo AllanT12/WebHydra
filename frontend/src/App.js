@@ -1,25 +1,28 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Devices from './Components/Devices';
+import DeviceLoadingComponent from './Components/DeviceLoading';
+import axiosInstance from "./axios";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+	const PostLoading = DeviceLoadingComponent(Devices);
+	const [appState, setAppState] = useState({
+		loading: false,
+		devices: null,
+	});
 
+	useEffect(() => {
+		axiosInstance.get('/devices/view').then((res) => {
+			const allPosts = res.data;
+			setAppState({ loading: false, devices: allPosts });
+			console.log(res.data);
+		});
+	}, [setAppState]);
+	return (
+		<div className="App">
+			<h1>Devices</h1>
+			<PostLoading isLoading={appState.loading} devices={appState.devices} />
+		</div>
+	);
+}
 export default App;

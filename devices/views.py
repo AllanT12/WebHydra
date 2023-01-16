@@ -3,6 +3,7 @@ from django.shortcuts import render
 from injector import inject
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from CacheService import CacheService
@@ -11,9 +12,10 @@ from .services import DeviceService
 
 
 class DeviceAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
     @inject
-    def setup(self, request, my_service: DeviceService, Cache: CacheService , **kwargs):
+    def setup(self, request, my_service: DeviceService, Cache: CacheService, **kwargs):
         self.service = my_service
         self.request = request
         self.kwargs = kwargs
@@ -23,7 +25,7 @@ class DeviceAPIView(APIView):
         devices = self.service.get_all(self.Cache)
         if devices:
             data = DeviceSerializer(devices, many=True)
-            return JsonResponse(status=202, data=data.data)
+            return JsonResponse(status=202, data=data.data, safe=False)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -31,7 +33,7 @@ class DeviceAPIView(APIView):
         device = DeviceSerializer(data=request.data)
         if device.is_valid():
             device.save()
-            self.Cache.set(device.get_value('id'), device)
+            self.Cache.set(key=device.data.get('deivceid'), data=device)
             return JsonResponse(device.errors, status=202)
         else:
             return JsonResponse(device.errors, status=400)
@@ -41,6 +43,8 @@ class DeviceAPIView(APIView):
         data = DeviceSerializer(instance=device, data=request.data)
         if data.is_valid():
             data.save()
+            self.Cache.delete(pk)
+            self.service.set(pk, data)
             return JsonResponse(status=202, data=data.data)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)

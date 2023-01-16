@@ -3,6 +3,7 @@ from django.shortcuts import render
 from injector import inject
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
@@ -12,7 +13,10 @@ from .serializer import UserSerializer
 from .models import NewUser
 from django.contrib.auth.hashers import make_password
 from .services import UserService
+
+
 class UserAPIView(APIView):
+    permission_classes = [AllowAny]
 
     @inject
     def setup(self, request, my_service: UserService, Cache: CacheService , **kwargs):

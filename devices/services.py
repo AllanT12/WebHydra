@@ -20,3 +20,17 @@ class DeviceService:
             device = Devices.objects.get(nr)
             Cache.set(key, device)
         return device
+
+    def set(self, nr, Cache: CacheService):
+        key = 'device_'+nr
+        device = Devices.objects.get(nr)
+        Cache.set(key, device)
+
+    def patch(self, nr, Cache: CacheService, device):
+        key = 'device_' + nr
+        Cache.delete(key)
+        Cache.set(key, device)
+
+    def delete(self, nr, Cache: CacheService):
+        key = 'device_' + nr
+        Cache.delete(key)

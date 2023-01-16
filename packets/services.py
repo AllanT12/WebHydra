@@ -20,3 +20,18 @@ class PacketService:
             packet = Packets.objects.get(nr)
             Cache.set(key, packet)
         return packet
+
+    def set(self, nr, Cache: CacheService):
+        key = 'packet_'+nr
+        packet = Packets.objects.get(nr)
+        Cache.set(key, packet)
+
+    def patch(self, nr, Cache: CacheService):
+        key = 'packet_' + nr
+        Cache.delete(key)
+        packets = Packets.objects.get(nr)
+        Cache.set(key, packets)
+
+    def delete(self, nr, Cache: CacheService):
+        key = 'packet_' + nr
+        Cache.delete(key)

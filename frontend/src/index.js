@@ -8,6 +8,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Register from './Components/Register';
 import Login from './Components/Login';
+import Logout from './Components/Logout';
 
 const routing = (
 	<Router>
@@ -17,6 +18,7 @@ const routing = (
 				<Route exact path="/" element={<App/>} />
 				<Route exact path="/register" element={<Register/>} />
 				<Route exact path="/login" element={<Login/>} />
+				<Route exact path="/logout" element={<Logout/>} />
 			</Routes>
 			<Footer />
 		</React.StrictMode>

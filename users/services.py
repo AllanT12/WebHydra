@@ -16,14 +16,21 @@ class UserService:
         return users
 
     def get(self, nr, Cache: CacheService):
-        key = 'user_'+nr
+        key = 'user_'+str(nr)
         if Cache.is_set(key) is True:
             user = Cache.get(key)
         else:
-            user = NewUser.objects.get(nr)
+            user = NewUser.objects.get(pk=nr)
             Cache.set(key, user)
         return user
 
     def encrypt(self, user: UserSerializer):
         db_password = make_password(user.data.get("password"))
         NewUser.objects.filter(email=user.data.get("email")).update(password=db_password)
+
+    def delete(self, user_id, Cache):
+        key = 'user_' + str(user_id)
+        user = self.get(nr=user_id, Cache=Cache)
+        user.is_active = False
+        user.save()
+        Cache.delete(key)

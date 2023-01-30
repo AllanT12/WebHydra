@@ -9,6 +9,9 @@ import Footer from './Components/Footer';
 import Register from './Components/Register';
 import Login from './Components/Login';
 import Logout from './Components/Logout';
+import GetDevices from "./Components/GetDevices";
+import GetPackets from "./Components/GetPackets";
+import Pricing from "./Components/Subs";
 
 const routing = (
 	<Router>
@@ -19,6 +22,9 @@ const routing = (
 				<Route exact path="/register" element={<Register/>} />
 				<Route exact path="/login" element={<Login/>} />
 				<Route exact path="/logout" element={<Logout/>} />
+				<Route exact path="/devices" element={<GetDevices/>} />
+				<Route exact path="/packets/:id" element={<GetPackets/>} />
+				<Route exact path="/subs/" element={<Pricing/>} />
 			</Routes>
 			<Footer />
 		</React.StrictMode>
@@ -27,7 +33,5 @@ const routing = (
 
 ReactDOM.render(routing, document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+
 serviceWorker.unregister();

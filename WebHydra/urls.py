@@ -5,4 +5,5 @@ urlpatterns = [
     path('devices/', include('devices.urls')),
     path('packets/', include('packets.urls')),
     path('user/', include('users.urls')),
+    path('subs/', include('subscriptions.urls')),
 ]

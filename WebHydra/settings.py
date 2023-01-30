@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'users',
     'packets',
     'devices',
+    'subscriptions',
     'django_injector',
     'corsheaders',
 ]
@@ -87,7 +88,7 @@ WSGI_APPLICATION = 'WebHydra.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Hydra2',
+        'NAME': 'Hydra',
         'USER': 'postgres',
         'PASSWORD': 'popasdf12',
         'HOST': 'localhost',
@@ -158,4 +159,5 @@ CACHES = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://192.168.1.241:3000",
 ]

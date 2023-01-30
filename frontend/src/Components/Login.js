@@ -62,7 +62,7 @@ export default function SignIn() {
 			.then((res) => {
 				localStorage.setItem('token', res.data.token);
 				axiosInstance.defaults.headers['Authorization'] ='Token ' + localStorage.getItem('token');
-				history('/');
+				history('/devices');
 				//window.location.assign("/");
 				//console.log(res);
 				//console.log(axiosInstance.defaults.headers['Authorization']);
@@ -104,10 +104,6 @@ export default function SignIn() {
 						autoComplete="current-password"
 						onChange={handleChange}
 					/>
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="Remember me"
-					/>
 					<Button
 						type="submit"
 						fullWidth
@@ -119,13 +115,8 @@ export default function SignIn() {
 						Sign In
 					</Button>
 					<Grid container>
-						<Grid item xs>
-							<Link href="#" variant="body2">
-								Forgot password?
-							</Link>
-						</Grid>
 						<Grid item>
-							<Link href="#" variant="body2">
+							<Link href="/register" variant="body2">
 								{"Don't have an account? Sign Up"}
 							</Link>
 						</Grid>

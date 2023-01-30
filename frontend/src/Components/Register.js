@@ -64,8 +64,6 @@ export default function SignUp() {
 			})
 			.then((res) => {
 				history('/login');
-				console.log(res);
-				console.log(res.data);
 			});
 	};
 
@@ -118,12 +116,7 @@ export default function SignUp() {
 								onChange={handleChange}
 							/>
 						</Grid>
-						<Grid item xs={12}>
-							<FormControlLabel
-								control={<Checkbox value="allowExtraEmails" color="primary" />}
-								label="I want to receive inspiration, marketing promotions and updates via email."
-							/>
-						</Grid>
+
 					</Grid>
 					<Button
 						type="submit"
@@ -137,7 +130,7 @@ export default function SignUp() {
 					</Button>
 					<Grid container justify="flex-end">
 						<Grid item>
-							<Link href="#" variant="body2">
+							<Link href="/login" variant="body2">
 								Already have an account? Sign in
 							</Link>
 						</Grid>

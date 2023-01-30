@@ -5,7 +5,8 @@ from .services import PacketService
 
 services = PacketService
 urlpatterns = [
-    path('view/', PacketAPIView.as_view()),
+    path('view/<int:pk>', PacketAPIView.as_view()),
     path('add/', PacketAPIView.as_view()),
-    path('update/', PacketAPIView.as_view()),
+    path('update/<int:pk>', PacketAPIView.as_view()),
+    path('delete/<int:pk>', PacketAPIView.as_view()),
 ]

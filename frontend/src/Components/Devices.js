@@ -2,10 +2,12 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import {CardActions} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import axiosInstance from "../axios";
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
@@ -37,22 +39,24 @@ const useStyles = makeStyles((theme) => ({
 const Devices = (props) => {
 	const { devices } = props;
 	const classes = useStyles();
-	console.log(devices);
-	if (devices === null|| devices.length === 0) {return <p>Can not find any posts, sorry</p>;}else {
+	const navigateToPage = (nr) => {
+  	window.location.assign("/packets/"+nr.toString());
+		console.log(nr);
+  };
+	const del = (nr) => {
+  	axiosInstance.delete('/devices/delete/'+nr.toString()).then((res) => {
+		  window.location.reload();
+		});
+  };
+	if (devices === null|| devices.length === 0) {return <p>Can not find any devices, sorry</p>;}else {
 		return (
 			<React.Fragment>
 				<Container maxWidth="md" component="main">
 					<Grid container spacing={5} alignItems="flex-end">
 						{devices.map((device) => {
 							return (
-								// Enterprise card is full width at sm breakpoint
-								<Grid item key={device.id} xs={12} md={4}>
+								<Grid item key={device.deivceid} xs={12} md={4}>
 									<Card className={classes.card}>
-										<CardMedia
-											className={classes.cardMedia}
-											image="https://source.unsplash.com/random"
-											title="Image title"
-										/>
 										<CardContent className={classes.cardContent}>
 											<Typography
 												gutterBottom
@@ -60,18 +64,13 @@ const Devices = (props) => {
 												component="h2"
 												className={classes.postTitle}
 											>
-												{device.devicename.substr(0, 50)}...
+												{device.devicename}
 											</Typography>
-											<div className={classes.postText}>
-												<Typography
-													component="p"
-													color="textPrimary"
-												></Typography>
-												<Typography variant="p" color="textSecondary">
-													{device.ownerid}...
-												</Typography>
-											</div>
 										</CardContent>
+										<CardActions>
+                    						<Button onClick={() => navigateToPage(device.deivceid)} size="small">Read Packets</Button>
+                    						<Button onClick={() => del(device.deivceid)} size="small" variant="outlined" color="error">Delete</Button>
+                  						</CardActions>
 									</Card>
 								</Grid>
 							);

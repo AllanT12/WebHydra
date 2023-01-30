@@ -13,24 +13,33 @@ class DeviceService:
         return devices
 
     def get(self, nr, Cache: CacheService):
-        key = 'device_'+nr
+        key = 'device_'+str(nr)
         if Cache.is_set(key) is True:
             device = Cache.get(key)
         else:
-            device = Devices.objects.get(nr)
+            device = Devices.objects.filter(ownerid=nr)
+            Cache.set(key, device)
+        return device
+
+    def get_pk(self, nr, Cache: CacheService):
+        key = 'device_'+str(nr)
+        if Cache.is_set(key) is True:
+            device = Cache.get(key)
+        else:
+            device = Devices.objects.filter(pk=nr)
             Cache.set(key, device)
         return device
 
     def set(self, nr, Cache: CacheService):
-        key = 'device_'+nr
-        device = Devices.objects.get(nr)
+        key = 'device_'+str(nr)
+        device = Devices.objects.get(pk=nr)
         Cache.set(key, device)
 
     def patch(self, nr, Cache: CacheService, device):
-        key = 'device_' + nr
+        key = 'device_' + str(nr)
         Cache.delete(key)
         Cache.set(key, device)
 
     def delete(self, nr, Cache: CacheService):
-        key = 'device_' + nr
+        key = 'device_' + str(nr)
         Cache.delete(key)

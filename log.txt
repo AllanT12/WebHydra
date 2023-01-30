@@ -1,0 +1,1 @@
+{'user_name': [ErrorDetail(string='new user with this user name already exists.', code='unique')]}error at creating user
